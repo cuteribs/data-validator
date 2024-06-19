@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "commonjs",
+		"outDir": "./dist",
+		"types": ["jest"],
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"paths": {
+			"src/*": ["./src/*"],
+			"test/*": ["./test/*"]
+		}
+	},
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "test/**/*.test.ts"]
+}
