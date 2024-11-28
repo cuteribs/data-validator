@@ -1,17 +1,18 @@
 {
-	"name": "data-validator",
-	"version": "0.0.0-dev",
+	"name": "@cuteribs/data-validator",
+	"version": "0.0.1-dev",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"type": "module",
 	"scripts": {
-		"build": "tsc",
+		"build": "tsc --strict -d",
 		"test": "jest --coverage",
+		"publish": "npm run build && npm publish --access public",
 		"lint": "eslint src",
 		"lint-fix": "eslint src --fix"
 	},
 	"author": "li.eric.liu@dnv.com",
-	"description": "",
+	"description": "Data validator library",
 	"devDependencies": {
 		"@types/jest": "29.5.12",
 		"@types/node": "^20.14.4",

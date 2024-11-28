@@ -169,15 +169,13 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 			
 			const numericValue = Number(value);
 
-			if (
-				typeof rule.minimum === 'number' &&
+			if (typeof rule.minimum === 'number' &&
 				(rule.exclusiveMinimum ? numericValue <= rule.minimum : numericValue < rule.minimum)
 			) {
 				return false;
 			}
 
-			if (
-				typeof rule.maximum === 'number' &&
+			if (typeof rule.maximum === 'number' &&
 				(rule.exclusiveMaximum ? numericValue >= rule.maximum : numericValue > rule.maximum)
 			) {
 				return false;
@@ -203,7 +201,7 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 			}
 		}
 
-		if (rule.enum && !rule.enum.includes(value)) {
+		if (rule.enum && rule.enum.length > 0 && !rule.enum.includes(value)) {
 			return false;
 		}
 

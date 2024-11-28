@@ -5,6 +5,7 @@
 		"outDir": "./dist",
 		"types": ["jest"],
 		"esModuleInterop": true,
+		"declaration": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"skipLibCheck": true,
@@ -13,5 +14,6 @@
 			"test/*": ["./test/*"]
 		}
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "test/**/*.test.ts"]
+	"include": ["src/**/*.ts"],
+	"exclude": ["test/**/*.ts"]
 }

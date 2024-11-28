@@ -1,11 +1,9 @@
 {
 	"preset": "ts-jest",
-	"transform": {
-		"^.+\\.ts$": "ts-jest"
-	},
+	"testMatch": ["**/*.test.ts"],
 	"moduleNameMapper": {
 		"^src(.*)$": "<rootDir>/src$1",
 		"^test(.*)$": "<rootDir>/test$1"
 	},
-	"modulePathIgnorePatterns": ["<rootDir>/dist/"]
+	"modulePathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/converage/", "<rootDir>/node_modules/"]
 }
