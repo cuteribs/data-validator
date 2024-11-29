@@ -1,7 +1,18 @@
 ﻿import { Nullable, isNumber } from 'src/common';
 import { LogMessages } from 'src/LogMessages';
 import { RecordValidatorFactory, RequiredIfRegexMatchValidator } from './recordValidators';
-import { Schema, Logger, RecordValidationResult, ValueValidationResult, Severity, ValueValidation, ValidationRule, PropertyType, DataFormat } from 'src/models';
+import { 
+	Schema, 
+	Logger, 
+	RecordValidationResult, 
+	ValueValidationResult, 
+	Severity, 
+	ValueValidation, 
+	ValidationRule, 
+	PropertyType, 
+	DataFormat, 
+	Property
+} from 'src/models';
 
 export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 	protected validationStartTime: Nullable<number> = undefined;
@@ -23,7 +34,7 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 
 		const propertyNames = Array.from(inputPropertyNames);
 
-		for (const p of this.schema.autoProperties) {
+		for (const p of this.getAutoProperties()) {
 			if (propertyNames.includes(p.name)) {
 				this.logger.logError(LogMessages.SchemaPropertyConflict);
 				return false;
@@ -85,7 +96,7 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 	): void {
 		for (const propertyName of propertyNames) {
 			const value = this.getValue(record, propertyName);
-			const property = this.schema.validationProperties.find((c) => c.name === propertyName);
+			const property = this.getValidationProperties().find((c) => c.name === propertyName);
 
 			if (!property) {
 				result.values.push(value);
@@ -209,7 +220,7 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 	}
 
 	protected appendAutoProperties(result: RecordValidationResult): void {
-        for (const p of this.schema.autoProperties) {
+        for (const p of this.getAutoProperties()) {
             let value = '';
 
             this.validationStartTime ??= Date.now();
@@ -296,12 +307,12 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
         }
 
         for (const name of propertyNames) {
-            if (!this.schema.validationProperties.some((x) => x.name === name)) {
+            if (!this.getValidationProperties().some((x) => x.name === name)) {
                 this.logger.logWarning(LogMessages.PropertyNotExistInSchema, name);
             }
         }
 
-        for (const property of this.schema.validationProperties.filter((c) => c.required)) {
+        for (const property of this.getValidationProperties().filter((c) => c.required)) {
             if (!propertyNames.includes(property.name)) {
                 this.logger.logError(LogMessages.RequiredPropertyMissing, property.name);
                 isValid = false;
@@ -310,6 +321,14 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 
         return isValid;
     }
+
+	protected getValidationProperties(): Property[] {
+		return this.schema.properties.filter((p) => p.type === PropertyType.Validation);
+	}
+	
+	protected getAutoProperties(): Property[] {
+		return this.schema.properties.filter((p) => p.type !== PropertyType.Validation);
+	}
 
 	protected abstract getPropertyNamesFromInput(input: TInput): string[];
 

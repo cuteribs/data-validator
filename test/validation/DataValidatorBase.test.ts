@@ -366,7 +366,7 @@ function getTestData() {
 }
 
 function getData(propertyName: string, value: string) {
-	const property = testSchema.validationProperties.find((x) => x.name == propertyName);
+	const property = testSchema.properties.find((x) => x.name == propertyName);
 	const validation = property?.validations?.[0];
 	return { propertyName, value, validation };
 }

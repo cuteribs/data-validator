@@ -1,15 +1,12 @@
 ﻿import { Nullable } from 'src/common';
-import { Property, PropertyType, RecordValidationRule } from '.';
+import { Property, RecordValidationRule } from '.';
 
 export class Schema {
 	versionNumber: number;
 	description: Nullable<string>;
 	properties: Property[];
 	recordValidationRules: Nullable<RecordValidationRule[]>;
-	extensions: Nullable<any>;
-
-	validationProperties: Property[];
-	autoProperties: Property[];
+	// extensions: Nullable<any>;
 
 	constructor(
 		versionNumber: number,
@@ -22,9 +19,6 @@ export class Schema {
 		this.description = description;
 		this.properties = properties || [];
 		this.recordValidationRules = recordValidationRules;
-		this.extensions = extensions;
-
-		this.validationProperties = this.properties.filter((p) => p.type === PropertyType.Validation);
-		this.autoProperties = this.properties.filter((p) => p.type !== PropertyType.Validation);
+		// this.extensions = extensions;
 	}
 }
