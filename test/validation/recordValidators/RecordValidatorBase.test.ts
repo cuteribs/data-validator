@@ -1,4 +1,4 @@
-﻿import { RecordValidationType, RecordValidationRule } from 'src/models';
+﻿import { RecordValidationType, createRecordValidationRule } from 'src/models';
 import {
 	RequiredIfNotNullValidator,
 	RequiredIfRegexMatchValidator,
@@ -19,7 +19,7 @@ type TestRecord = {};
 
 describe('RecordValidatorBase', () => {
 	test.each(testData)('CreateTest: %s', ({ type, objectType }) => {
-		const rule = new RecordValidationRule(type, 'name', 'description', 'errorMessage', [], [], undefined, '1');
+		const rule = createRecordValidationRule(type, 'name', 'description', 'errorMessage', [], [], undefined, '1');
 		const result = RecordValidatorFactory.create<TestRecord>(rule, (r, p) => '');
 		expect(result.constructor.name).toBe(objectType);
 	});

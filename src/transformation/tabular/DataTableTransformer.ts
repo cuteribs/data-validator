@@ -1,9 +1,9 @@
-﻿import { Schema } from '../../models/Schema';
+﻿import { ISchema } from '../../models/ISchema';
 import { DataColumn, DataTable } from '../../models/DataTable';
 import { DataTransformerBase } from '../DataTransformerBase';
 
 export class DataTableTransformer extends DataTransformerBase<DataTable, DataTable> {
-	constructor(schema: Schema) {
+	constructor(schema: ISchema) {
 		super(schema);
 	}
 

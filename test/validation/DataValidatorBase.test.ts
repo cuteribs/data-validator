@@ -1,17 +1,20 @@
 ﻿import { Nullable } from 'src/common';
 import {
-	Schema,
-	Property,
+	ISchema,
+	IProperty,
 	PropertyType,
-	ValueValidation,
 	Severity,
 	DataFormat,
 	Logger,
-	RecordValidationRule,
 	RecordValidationType,
+	createValidationRule,
+	createValueValidation,
+	createProperty,
+	createRecordValidationRule,
+	createSchema,
 } from 'src/models';
-import { ValidationRule, createRule } from 'src/models/ValidationRule';
 import { DataValidatorBase } from 'src/validation/DataValidatorBase';
+import { IValidationRule } from '../../src/models';
 
 const valueValidationData = {
 	validationRules: {
@@ -122,17 +125,17 @@ const valueValidationData = {
 	],
 };
 
-const testSchema = new Schema(9, 'Test Schema', getTestProperties());
+const testSchema = createSchema(9, 'Test ISchema', getTestProperties());
 
 describe('DataValidatorBase', () => {
-	const positiveIntegerRule = createRule({
+	const positiveIntegerRule = createValidationRule({
 		name: 'positive integer',
 		errorMessage: 'Value is not a positive integer.',
 		dataFormat: DataFormat.Int32,
 		minimum: 1,
 	});
 
-	const notEmptyStringRule = createRule({
+	const notEmptyStringRule = createValidationRule({
 		name: 'not empty string',
 		notEmpty: true,
 		errorMessage: 'Value is empty.',
@@ -140,14 +143,14 @@ describe('DataValidatorBase', () => {
 	});
 
 	const getTestSchema = () =>
-		new Schema(9, 'Test Schema', [
-			new Property('Column_1', 1, PropertyType.Validation, true, [
-				new ValueValidation(Severity.Error, positiveIntegerRule),
+		createSchema(9, 'Test ISchema', [
+			createProperty('Column_1', 1, PropertyType.Validation, true, [
+				createValueValidation(Severity.Error, positiveIntegerRule),
 			]),
-			new Property('Column_2', 2, PropertyType.Validation, false, [
-				new ValueValidation(Severity.Fallback, notEmptyStringRule),
+			createProperty('Column_2', 2, PropertyType.Validation, false, [
+				createValueValidation(Severity.Fallback, notEmptyStringRule),
 			]),
-			new Property('Column_3', 3, PropertyType.Validation, false),
+			createProperty('Column_3', 3, PropertyType.Validation, false),
 		]);
 
 	test('should validate with valid input and return output', () => {
@@ -183,19 +186,19 @@ describe('DataValidatorBase', () => {
 	});
 
 	test('should validate with auto properties and return output', () => {
-		const schema = new Schema(1, '', [
-			new Property('Column1', 1, PropertyType.Validation, false, [
-				new ValueValidation(
+		const schema = createSchema(1, '', [
+			createProperty('Column1', 1, PropertyType.Validation, false, [
+				createValueValidation(
 					Severity.Fallback,
-					createRule({
+					createValidationRule({
 						dataFormat: DataFormat.Float,
 						fallbackValue: '9.9',
 					})
 				),
 			]),
-			new Property('Column2', 1, PropertyType.Validation, false),
-			new Property('DateTime', 1, PropertyType.Timestamp, false),
-			new Property('Correction', 1, PropertyType.FallbackIndicator, false),
+			createProperty('Column2', 1, PropertyType.Validation, false),
+			createProperty('DateTime', 1, PropertyType.Timestamp, false),
+			createProperty('Correction', 1, PropertyType.FallbackIndicator, false),
 		]);
 
 		const logger = new Logger();
@@ -240,7 +243,7 @@ describe('DataValidatorBase', () => {
 		const logger = new Logger();
 		const schema = getTestSchema();
 		schema.recordValidationRules = [
-			new RecordValidationRule(
+			createRecordValidationRule(
 				RecordValidationType.RequiredIfNotNull,
 				'RequiredIfNotNull',
 				'If Column_1 not null then Column_2 is required',
@@ -280,15 +283,15 @@ describe('DataValidatorBase', () => {
 			return;
 		}
 
-		if(validation.severity === Severity.Error){
+		if (validation.severity === Severity.Error) {
 			expect(result).toBe(false);
-		} else{
+		} else {
 			expect(result).toBe(true);
 
-			if(validation.severity === Severity.Fallback){
+			if (validation.severity === Severity.Fallback) {
 				expect(output.records[0][propertyName]).toBe(validation.rule.fallbackValue);
 			}
-		}		
+		}
 
 		const logEntry = logger.entries[0];
 		expect(logEntry.message).toBe(validation.rule.errorMessage);
@@ -298,7 +301,7 @@ describe('DataValidatorBase', () => {
 class TestDataValidator extends DataValidatorBase<TestData, TestData, TestRecord> {
 	private propertyNames: string[] = [];
 
-	constructor(schema: Schema, logger: Logger) {
+	constructor(schema: ISchema, logger: Logger) {
 		super(schema, logger);
 	}
 
@@ -335,25 +338,25 @@ class TestData {
 
 type TestRecord = Record<string, string>;
 
-function getTestValidationRules(): Record<string, ValidationRule> {
+function getTestValidationRules(): Record<string, IValidationRule> {
 	const entries = Object.entries(valueValidationData.validationRules);
-	const rules: Record<string, ValidationRule> = {};
+	const rules: Record<string, IValidationRule> = {};
 
 	for (const [key, value] of entries) {
-		rules[key] = createRule({ name: key, ...value });
+		rules[key] = createValidationRule({ name: key, ...value });
 	}
 
 	return rules;
 }
 
-function getTestProperties(): Property[] {
+function getTestProperties(): IProperty[] {
 	const rules = getTestValidationRules();
 
 	return valueValidationData.properties.map((x) => {
 		const severity = Severity[(x.severity ?? 'Warning') as keyof typeof Severity];
 		const rule = rules[x.rule];
-		const vaidations = rule ? [new ValueValidation(severity, rule)] : undefined;
-		const property = new Property(x.name, 1, PropertyType.Validation, false, vaidations);
+		const vaidations = rule ? [createValueValidation(severity, rule)] : undefined;
+		const property = createProperty(x.name, 1, PropertyType.Validation, false, vaidations);
 		return property;
 	});
 }

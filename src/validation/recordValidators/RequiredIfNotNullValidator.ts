@@ -1,8 +1,8 @@
-﻿import { RecordValidationRule } from 'src/models';
+﻿import { IRecordValidationRule } from 'src/models';
 import { RecordValidatorBase } from '.';
 
 export class RequiredIfNotNullValidator<TRecord> extends RecordValidatorBase<TRecord> {
-	constructor(rule: RecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
+	constructor(rule: IRecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
 		super(rule, valueGetter);
 	}
 

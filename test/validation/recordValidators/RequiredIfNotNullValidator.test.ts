@@ -1,6 +1,7 @@
 ﻿import { Nullable } from 'src/common';
-import { RecordValidationType, RecordValidationRule } from 'src/models';
+import { RecordValidationType, IRecordValidationRule } from 'src/models';
 import { RequiredIfNotNullValidator } from 'src/validation/recordValidators';
+import { createRecordValidationRule } from '../../../src/models/ISchema';
 
 class TestRecord {
 	values: Record<string, Nullable<string>>;
@@ -27,7 +28,7 @@ const testData = [
 	{ expected: false, isAffectedToAll: true, record: new TestRecord('a', 'b', null, null) },
 ];
 
-function createSut(rule: RecordValidationRule): RequiredIfNotNullValidator<TestRecord> {
+function createSut(rule: IRecordValidationRule): RequiredIfNotNullValidator<TestRecord> {
 	const valueGetter = (record: TestRecord, property: string) => record.get(property) ?? '';
 	const sut = new RequiredIfNotNullValidator<TestRecord>(rule, valueGetter);
 	return sut;
@@ -35,7 +36,7 @@ function createSut(rule: RecordValidationRule): RequiredIfNotNullValidator<TestR
 
 describe('RequiredIfNotNullValidator', () => {
 	test.each(testData)('RequiredIfNotNullValidatorTests: %s', ({ expected, isAffectedToAll, record }) => {
-		const rule = new RecordValidationRule(
+		const rule = createRecordValidationRule(
 			RecordValidationType.RequiredIfNotNull,
 			'TestRule',
 			'Test Rule',

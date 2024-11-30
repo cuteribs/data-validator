@@ -1,5 +1,5 @@
 ﻿import { Nullable } from 'src/common';
-import { RecordValidationType, RecordValidationRule } from 'src/models';
+import { RecordValidationType, IRecordValidationRule, createRecordValidationRule } from 'src/models';
 import { RequiredIfRegexMatchValidator } from 'src/validation/recordValidators';
 
 class TestRecord {
@@ -26,7 +26,7 @@ const testData = [
 	{ expected: false, record: new TestRecord('990000', null, 'c') },
 ];
 
-function createSut(rule: RecordValidationRule): RequiredIfRegexMatchValidator<TestRecord> {
+function createSut(rule: IRecordValidationRule): RequiredIfRegexMatchValidator<TestRecord> {
 	const valueGetter = (record: TestRecord, property: string) => record.get(property) ?? '';
 	const sut = new RequiredIfRegexMatchValidator<TestRecord>(rule, valueGetter);
 	return sut;
@@ -34,7 +34,7 @@ function createSut(rule: RecordValidationRule): RequiredIfRegexMatchValidator<Te
 
 describe('RequiredIfRegexMatchValidator', () => {
 	test.each(testData)('RequiredIfRegexMatchValidatorTests: %s', ({ expected, record }) => {
-		const rule = new RecordValidationRule(
+		const rule = createRecordValidationRule(
 			RecordValidationType.RequiredIfRegexMatch,
 			'TestRule',
 			'Test Rule',
@@ -51,7 +51,7 @@ describe('RequiredIfRegexMatchValidator', () => {
 	});
 
 	test('RequiredIfRegexMatchValidatorTests_Exception', () => {
-		var rule = new RecordValidationRule(
+		var rule = createRecordValidationRule(
 			RecordValidationType.RequiredIfRegexMatch,
 			'IMORule',
 			'Test Rule for IMO',

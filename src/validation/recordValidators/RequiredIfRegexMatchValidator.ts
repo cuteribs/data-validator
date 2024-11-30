@@ -1,10 +1,10 @@
-﻿import { RecordValidationRule } from 'src/models';
+﻿import { IRecordValidationRule } from 'src/models';
 import { RecordValidatorBase } from '.';
 
 export class RequiredIfRegexMatchValidator<TRecord> extends RecordValidatorBase<TRecord> {
 	static regexPatterns: Record<string, RegExp> = {};
 
-	constructor(rule: RecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
+	constructor(rule: IRecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
 		super(rule, valueGetter);
 
 		if (!rule.checkParameter) {

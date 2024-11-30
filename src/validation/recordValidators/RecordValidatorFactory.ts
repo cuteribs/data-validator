@@ -4,7 +4,7 @@ import {
 	RequiredIfRegexMatchValidator,
 	RequiredIfSumExceedsThresholdValidator,
 } from '.';
-import { RecordValidationRule, RecordValidationType } from 'src/models';
+import { IRecordValidationRule, RecordValidationType } from 'src/models';
 
 export class RecordValidatorFactory {
 	/// <summary>
@@ -15,7 +15,7 @@ export class RecordValidatorFactory {
 	/// <returns>The created record validator.</returns>
 	/// <exception cref="NotSupportedException">Thrown when the record validation rule type is not supported.</exception>
 	static create<TRecord>(
-		rule: RecordValidationRule,
+		rule: IRecordValidationRule,
 		valueGetter: (record: TRecord, property: string) => string
 	): RecordValidatorBase<TRecord> {
 		let result: RecordValidatorBase<TRecord>;

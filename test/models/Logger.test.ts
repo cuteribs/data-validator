@@ -1,5 +1,4 @@
-﻿import { Logger } from '../../src/models/Logger';
-import { Severity } from '../../src/models/Severity';
+﻿import { Logger, Severity } from '../../src/models';
 
 describe('LogError', () => {
 	it('Adds error entry to list', () => {
@@ -51,13 +50,13 @@ describe('Log', () => {
 		expect(entry.severity).toBe(severity);
 		expect(entry.message).toBe(message);
 
-		logger.log(Severity.Error, 'Error message', 'Property', 1, 'Rule', 'Value', { key: 'value' });
+		logger.log(Severity.Error, 'Error message', 'IProperty', 1, 'Rule', 'Value', { key: 'value' });
 		entry = logger.entries[1];
 		expect(entry).not.toBeNull();
 		expect(entry.severity).toBe(Severity.Error);
 		expect(entry.message).toBe('Error message');
 		const args = entry.args;
-		expect(args['property']).toBe('Property');
+		expect(args['property']).toBe('IProperty');
 		expect(args['recordNumber']).toBe(1);
 		expect(args['rule']).toBe('Rule');
 		expect(args['value']).toBe('Value');

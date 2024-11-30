@@ -1,15 +1,12 @@
-﻿import { Property } from '../../../src/models/Property';
-import { PropertyType } from '../../../src/models/PropertyType';
-import { Schema } from '../../../src/models/Schema';
+﻿import { PropertyType, IProperty, ISchema, DataTable, createProperty, createSchema } from '../../../src/models';
 import { DataTableTransformer } from '../../../src/transformation/tabular/DataTableTransformer';
-import { DataTable } from '../../../src/models/DataTable';
 
 describe('DataTableTransformer', () => {
 	it('TransformTest', async () => {
 		// Arrange
-		const schema = new Schema(1, '', [
-			new Property('Name', 1, PropertyType.Validation, false),
-			new Property('Age', 2, PropertyType.Validation, false),
+		const schema = createSchema(1, '', [
+			createProperty('Name', 1, PropertyType.Validation, false),
+			createProperty('Age', 2, PropertyType.Validation, false),
 		]);
 		const input = new DataTable();
 		input.addColumn('Age');

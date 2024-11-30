@@ -1,9 +1,9 @@
-﻿import { Schema } from '../models/Schema';
+﻿import { ISchema } from '../models/ISchema';
 
 export abstract class DataTransformerBase<TInput, TOutput> {
-	schema: Schema;
+	schema: ISchema;
 
-	constructor(schema: Schema) {
+	constructor(schema: ISchema) {
 		this.schema = schema;
 	}
 

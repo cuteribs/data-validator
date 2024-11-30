@@ -1,10 +1,10 @@
-﻿import { RecordValidationRule } from 'src/models';
+﻿import { IRecordValidationRule } from 'src/models';
 
 export abstract class RecordValidatorBase<TRecord> {
-	rule: RecordValidationRule;
+	rule: IRecordValidationRule;
 	valueGetter: (record: TRecord, property: string) => string;
 
-	constructor(rule: RecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
+	constructor(rule: IRecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
 		this.rule = rule;
 		this.valueGetter = valueGetter;
 	}

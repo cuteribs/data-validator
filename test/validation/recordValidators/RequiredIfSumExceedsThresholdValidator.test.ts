@@ -1,6 +1,7 @@
 ﻿import { Nullable } from 'src/common';
-import { RecordValidationType, RecordValidationRule } from 'src/models';
+import { RecordValidationType, IRecordValidationRule } from 'src/models';
 import { RequiredIfSumExceedsThresholdValidator } from 'src/validation/recordValidators';
+import { createRecordValidationRule } from '../../../src/models/ISchema';
 
 class TestRecord {
 	values: Record<string, Nullable<string>>;
@@ -25,7 +26,7 @@ const testData = [
     { expected: false, threshold: 10, record: new TestRecord("10.002", "10.001", null) },
 ];
 
-function createSut(rule: RecordValidationRule): RequiredIfSumExceedsThresholdValidator<TestRecord> {
+function createSut(rule: IRecordValidationRule): RequiredIfSumExceedsThresholdValidator<TestRecord> {
 	const valueGetter = (record: TestRecord, property: string) => record.get(property) ?? '';
 	const sut = new RequiredIfSumExceedsThresholdValidator<TestRecord>(rule, valueGetter);
 	return sut;
@@ -33,7 +34,7 @@ function createSut(rule: RecordValidationRule): RequiredIfSumExceedsThresholdVal
 
 describe('RequiredIfRegexMatchValidator', () => {
 	test.each(testData)('Success: %s', ({ expected, threshold, record }) => {
-		const rule = new RecordValidationRule(
+		const rule = createRecordValidationRule(
 			RecordValidationType.RequiredIfSumExceedsThreshold,
 			'TestRule',
 			'Test Rule',
@@ -50,7 +51,7 @@ describe('RequiredIfRegexMatchValidator', () => {
 	});
 
 	test.each([undefined, null, '', 'abc'])('Error: %s', (checkParameter) => {
-		var rule = new RecordValidationRule(
+		var rule = createRecordValidationRule(
 			RecordValidationType.RequiredIfRegexMatch,
 			'IMORule',
 			'Test Rule for IMO',

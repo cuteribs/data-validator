@@ -1,11 +1,11 @@
-﻿import { RecordValidationRule } from 'src/models';
+﻿import { IRecordValidationRule } from 'src/models';
 import { RecordValidatorBase } from '.';
 import { isNumber } from 'src/common';
 
 export class RequiredIfSumExceedsThresholdValidator<TRecord> extends RecordValidatorBase<TRecord> {
 	private readonly threshold: number;
 
-	constructor(rule: RecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
+	constructor(rule: IRecordValidationRule, valueGetter: (record: TRecord, property: string) => string) {
 		super(rule, valueGetter);
 
 		if (isNumber(this.rule.checkParameter)) {

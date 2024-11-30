@@ -1,14 +1,21 @@
-export { DataFormat } from './DataFormat';
+export {
+	DataFormat,
+	PropertyType,
+	Severity,
+	RecordValidationType,
+	IProperty,
+	IRecordValidationRule,
+	IValidationRule,
+	IValueValidation,
+	ISchema,
+	createProperty,
+	createRecordValidationRule,
+	createSchema,
+	createValueValidation,
+	createValidationRule,
+} from './ISchema';
 export { LogEntry } from './LogEntry';
 export { Logger } from './Logger';
-export { Property } from './Property';
-export { PropertyType } from './PropertyType';
 export { RecordValidationResult } from './RecordValidationResult';
-export { RecordValidationRule } from './RecordValidationRule';
-export { RecordValidationType } from './RecordValidationType';
-export { Schema } from './Schema';
-export { Severity } from './Severity';
-export { ValidationRule } from './ValidationRule';
-export { ValueValidation } from './ValueValidation';
 export { ValueValidationResult } from './ValueValidationResult';
 export { DataTable, DataColumn, DataRow } from './DataTable';

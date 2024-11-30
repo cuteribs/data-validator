@@ -1,11 +1,11 @@
-﻿import { Logger, Schema, Property, PropertyType, DataTable } from 'src/models';
+﻿import { Logger, createSchema, createProperty, PropertyType, DataTable } from 'src/models';
 import { DataTableValidator } from 'src/validation/tabular/DataTableValidator';
 
 describe('DataTableValidator', () => {
 	it('ValidateTest', () => {
 		const logger = new Logger();
-		const schema = new Schema(1, '');
-		schema.properties.push(new Property('Column1', 1, PropertyType.Validation, false));
+		const schema = createSchema(1, '');
+		schema.properties.push(createProperty('Column1', 1, PropertyType.Validation, false));
 		const input = new DataTable();
 		input.addColumn('Column1');
 		input.addRow('Value1');

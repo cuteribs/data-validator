@@ -2,24 +2,26 @@
 import { LogMessages } from 'src/LogMessages';
 import { RecordValidatorFactory, RequiredIfRegexMatchValidator } from './recordValidators';
 import { 
-	Schema, 
+	ISchema, 
 	Logger, 
 	RecordValidationResult, 
 	ValueValidationResult, 
 	Severity, 
-	ValueValidation, 
-	ValidationRule, 
+	IValueValidation, 
+	IValidationRule, 
 	PropertyType, 
 	DataFormat, 
-	Property
+	IProperty
 } from 'src/models';
 
 export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
-	protected validationStartTime: Nullable<number> = undefined;
-	schema: Schema;
+	protected validationStartTime: Nullable<number>;
+	schema: ISchema;
 	logger: Logger;
+	validationProperties: Nullable<IProperty[]>;
+	autoProperties: Nullable<IProperty[]>;
 
-	constructor(schema: Schema, logger: Logger) {
+	constructor(schema: ISchema, logger: Logger) {
 		this.schema = schema;
 		this.logger = logger;
 	}
@@ -148,7 +150,7 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 	protected validateValue(
 		recordNumber: number,
 		propertyName: string,
-		validation: ValueValidation,
+		validation: IValueValidation,
 		value: string
 	): boolean {
 		const { severity, rule } = validation;
@@ -161,7 +163,7 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
 		return result;
 	}
 
-	private validateValueInternal(rule: ValidationRule, value: string): boolean {
+	private validateValueInternal(rule: IValidationRule, value: string): boolean {
 		// validate NotEmpty
 		if (value === '') {
 			return !rule.notEmpty;
@@ -322,12 +324,19 @@ export abstract class DataValidatorBase<TInput, TOutput, TRecord> {
         return isValid;
     }
 
-	protected getValidationProperties(): Property[] {
-		return this.schema.properties.filter((p) => p.type === PropertyType.Validation);
+	protected getValidationProperties(): IProperty[] {
+		if(!this.validationProperties){
+			this.validationProperties = this.schema.properties.filter((p) => p.type === PropertyType.Validation);
+
+		}
+		return this.validationProperties;
 	}
 	
-	protected getAutoProperties(): Property[] {
-		return this.schema.properties.filter((p) => p.type !== PropertyType.Validation);
+	protected getAutoProperties(): IProperty[] {
+		if(!this.autoProperties) {
+			this.autoProperties = this.schema.properties.filter((p) => p.type !== PropertyType.Validation);
+		}
+		return this.autoProperties;
 	}
 
 	protected abstract getPropertyNamesFromInput(input: TInput): string[];
