@@ -1,7 +1,10 @@
-﻿import { Nullable } from 'src/common';
-import { RecordValidationType, IRecordValidationRule } from 'src/models';
-import { RequiredIfSumExceedsThresholdValidator } from 'src/validation/recordValidators';
-import { createRecordValidationRule } from '../../../src/models/ISchema';
+﻿import {
+	Nullable,
+	RecordValidationType,
+	IRecordValidationRule,
+	RequiredIfSumExceedsThresholdValidator,
+	createRecordValidationRule,
+} from 'src/index';
 
 class TestRecord {
 	values: Record<string, Nullable<string>>;
@@ -16,14 +19,14 @@ class TestRecord {
 }
 
 const testData = [
-    { expected: true,  threshold: 10, record: new TestRecord(null, "10.001", "c") },
-    { expected: true,  threshold: 10, record: new TestRecord("9.999", "10.001", "c") },
-    { expected: true,  threshold: 10, record: new TestRecord("a", "10.001", "c") },
-    { expected: true,  threshold: 10, record: new TestRecord("9.999", "b", null) },
-    { expected: true,  threshold: 10, record: new TestRecord(null, null, null) },
-    { expected: false, threshold: 10, record: new TestRecord(null, "10.001", null) },
-    { expected: false, threshold: 10, record: new TestRecord("a", "10.001", null) },
-    { expected: false, threshold: 10, record: new TestRecord("10.002", "10.001", null) },
+	{ expected: true, threshold: 10, record: new TestRecord(null, '10.001', 'c') },
+	{ expected: true, threshold: 10, record: new TestRecord('9.999', '10.001', 'c') },
+	{ expected: true, threshold: 10, record: new TestRecord('a', '10.001', 'c') },
+	{ expected: true, threshold: 10, record: new TestRecord('9.999', 'b', null) },
+	{ expected: true, threshold: 10, record: new TestRecord(null, null, null) },
+	{ expected: false, threshold: 10, record: new TestRecord(null, '10.001', null) },
+	{ expected: false, threshold: 10, record: new TestRecord('a', '10.001', null) },
+	{ expected: false, threshold: 10, record: new TestRecord('10.002', '10.001', null) },
 ];
 
 function createSut(rule: IRecordValidationRule): RequiredIfSumExceedsThresholdValidator<TestRecord> {
@@ -42,7 +45,7 @@ describe('RequiredIfRegexMatchValidator', () => {
 			['p1', 'p2'],
 			['p3', 'p4'],
 			false,
-            threshold.toString()
+			threshold.toString()
 		);
 
 		const sut = createSut(rule);
@@ -59,7 +62,7 @@ describe('RequiredIfRegexMatchValidator', () => {
 			['p1', 'p2'],
 			['p3', 'p4'],
 			false,
-            checkParameter
+			checkParameter
 		);
 
 		const action = () => createSut(rule);

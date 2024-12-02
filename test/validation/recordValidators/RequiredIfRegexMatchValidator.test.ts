@@ -1,6 +1,4 @@
-﻿import { Nullable } from 'src/common';
-import { RecordValidationType, IRecordValidationRule, createRecordValidationRule } from 'src/models';
-import { RequiredIfRegexMatchValidator } from 'src/validation/recordValidators';
+﻿import { Nullable, RecordValidationType, IRecordValidationRule, createRecordValidationRule, RequiredIfRegexMatchValidator } from 'src/index';
 
 class TestRecord {
 	values: Record<string, Nullable<string>>;

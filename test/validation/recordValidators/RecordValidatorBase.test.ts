@@ -1,10 +1,11 @@
-﻿import { RecordValidationType, createRecordValidationRule } from 'src/models';
-import {
+﻿import {
+	RecordValidationType,
+	createRecordValidationRule,
 	RequiredIfNotNullValidator,
 	RequiredIfRegexMatchValidator,
 	RequiredIfSumExceedsThresholdValidator,
 	RecordValidatorFactory,
-} from 'src/validation/recordValidators';
+} from 'src/index';
 
 const testData = [
 	{ type: RecordValidationType.RequiredIfNotNull, objectType: RequiredIfNotNullValidator.name },

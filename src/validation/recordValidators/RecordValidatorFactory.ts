@@ -3,7 +3,7 @@ import {
 	RequiredIfNotNullValidator,
 	RequiredIfRegexMatchValidator,
 	RequiredIfSumExceedsThresholdValidator,
-} from '.';
+} from '..';
 import { IRecordValidationRule, RecordValidationType } from 'src/models';
 
 export class RecordValidatorFactory {

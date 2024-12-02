@@ -1,5 +1,4 @@
-﻿import { ISchema } from '../../models/ISchema';
-import { DataColumn, DataTable } from '../../models/DataTable';
+﻿import { ISchema, DataColumn, DataTable } from 'src/models';
 import { DataTransformerBase } from '../DataTransformerBase';
 
 export class DataTableTransformer extends DataTransformerBase<DataTable, DataTable> {

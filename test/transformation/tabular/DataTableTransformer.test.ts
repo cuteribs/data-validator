@@ -1,5 +1,4 @@
-﻿import { PropertyType, IProperty, ISchema, DataTable, createProperty, createSchema } from '../../../src/models';
-import { DataTableTransformer } from '../../../src/transformation/tabular/DataTableTransformer';
+﻿import { PropertyType, DataTable, createProperty, createSchema, DataTableTransformer } from 'src/index';
 
 describe('DataTableTransformer', () => {
 	it('TransformTest', async () => {

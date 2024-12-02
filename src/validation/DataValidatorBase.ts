@@ -1,6 +1,5 @@
-﻿import { Nullable, isNumber } from 'src/common';
-import { LogMessages } from 'src/LogMessages';
-import { RecordValidatorFactory, RequiredIfRegexMatchValidator } from './recordValidators';
+﻿import { Nullable, isNumber, LogMessages } from 'src/common';
+import { RecordValidatorFactory, RequiredIfRegexMatchValidator } from '.';
 import { 
 	ISchema, 
 	Logger, 

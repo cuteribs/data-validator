@@ -1,4 +1,4 @@
-﻿import { ISchema } from '../models/ISchema';
+﻿import { ISchema } from '../models/Schema';
 
 export abstract class DataTransformerBase<TInput, TOutput> {
 	schema: ISchema;

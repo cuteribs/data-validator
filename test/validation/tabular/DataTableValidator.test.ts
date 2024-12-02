@@ -1,5 +1,4 @@
-﻿import { Logger, createSchema, createProperty, PropertyType, DataTable } from 'src/models';
-import { DataTableValidator } from 'src/validation/tabular/DataTableValidator';
+﻿import { Logger, createSchema, createProperty, PropertyType, DataTable, DataTableValidator } from 'src/index';
 
 describe('DataTableValidator', () => {
 	it('ValidateTest', () => {

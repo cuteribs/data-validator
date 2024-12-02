@@ -1,5 +1,5 @@
 ﻿import { IRecordValidationRule } from 'src/models';
-import { RecordValidatorBase } from '.';
+import { RecordValidatorBase } from '..';
 
 export class RequiredIfRegexMatchValidator<TRecord> extends RecordValidatorBase<TRecord> {
 	static regexPatterns: Record<string, RegExp> = {};

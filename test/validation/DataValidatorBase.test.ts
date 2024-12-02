@@ -1,5 +1,5 @@
-﻿import { Nullable } from 'src/common';
-import {
+﻿import {
+	Nullable,
 	ISchema,
 	IProperty,
 	PropertyType,
@@ -12,9 +12,9 @@ import {
 	createProperty,
 	createRecordValidationRule,
 	createSchema,
-} from 'src/models';
-import { DataValidatorBase } from 'src/validation/DataValidatorBase';
-import { IValidationRule } from '../../src/models';
+	DataValidatorBase,
+	IValidationRule,
+} from 'src/index';
 
 const valueValidationData = {
 	validationRules: {

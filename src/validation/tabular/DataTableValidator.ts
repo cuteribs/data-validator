@@ -1,7 +1,6 @@
 import { Nullable } from 'src/common';
 import { DataValidatorBase } from '../DataValidatorBase';
-import { DataColumn, DataRow, DataTable } from '../../models/DataTable';
-import { ISchema, Logger } from 'src/models';
+import { DataColumn, DataRow, DataTable, ISchema, Logger } from 'src/models';
 
 export class DataTableValidator extends DataValidatorBase<DataTable, DataTable, DataRow> {
 	constructor(schema: ISchema, logger: Logger) {

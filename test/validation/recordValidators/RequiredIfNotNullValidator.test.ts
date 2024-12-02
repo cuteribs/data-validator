@@ -1,7 +1,10 @@
-﻿import { Nullable } from 'src/common';
-import { RecordValidationType, IRecordValidationRule } from 'src/models';
-import { RequiredIfNotNullValidator } from 'src/validation/recordValidators';
-import { createRecordValidationRule } from '../../../src/models/ISchema';
+﻿import {
+	Nullable,
+	RecordValidationType,
+	IRecordValidationRule,
+	RequiredIfNotNullValidator,
+	createRecordValidationRule,
+} from 'src/index';
 
 class TestRecord {
 	values: Record<string, Nullable<string>>;

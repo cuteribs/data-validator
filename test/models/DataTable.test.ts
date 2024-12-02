@@ -1,4 +1,4 @@
-﻿import { DataColumn, DataRow, DataTable } from 'src/models';
+﻿import { DataColumn, DataRow, DataTable } from 'src/index';
 
 describe('DataTable', () => {
 	test('Adds column', () => {

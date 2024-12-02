@@ -1,4 +1,4 @@
-﻿import { Logger, Severity } from '../../src/models';
+﻿import { Logger, Severity } from 'src/index';
 
 describe('LogError', () => {
 	it('Adds error entry to list', () => {

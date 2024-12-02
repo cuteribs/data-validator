@@ -1,5 +1,5 @@
 ﻿import { IRecordValidationRule } from 'src/models';
-import { RecordValidatorBase } from '.';
+import { RecordValidatorBase } from '..';
 import { isNumber } from 'src/common';
 
 export class RequiredIfSumExceedsThresholdValidator<TRecord> extends RecordValidatorBase<TRecord> {
